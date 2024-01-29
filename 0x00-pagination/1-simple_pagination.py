@@ -54,7 +54,21 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
+        Fetches pages or rows in a particular range.
 
+        Parameters:
+            page : int, optional
+            The page to retrieve information from.
+            By default page 1 is queried.
+
+            page_size : int, optional
+            The total number of records or rows
+            found on the given page.
+            By default, a page has 10 records.
+
+        Returns:
+            A list of list containing the pages
+            found in the matching range.
         """
         assert isinstance(page, int)
         assert isinstance(page_size, int)
