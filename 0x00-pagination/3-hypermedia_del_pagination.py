@@ -39,7 +39,6 @@ class Server:
         """
         if self.__indexed_dataset is None:
             dataset = self.dataset()
-            truncated_dataset = dataset[:1000]
             self.__indexed_dataset = {
                 i: dataset[i] for i in range(len(dataset))
             }
@@ -65,13 +64,27 @@ class Server:
         """
         dataset = self.indexed_dataset()
 
-        assert index < len(dataset)
+        assert isinstance(index, int)
+        assert index >= 0
+        assert index <= len(dataset) - page_size
 
-        data = [dataset.get(i) for i in range(index, index + page_size)]
+        end_index = index + page_size
+        data = []
+        i = index
+
+        # Scan items in dataset
+        while (i < end_index):
+            # Seek the next row if there's no record
+            if (not dataset.get(i)):
+                # Extend the end index when a row has no record
+                end_index += 1
+            else:
+                data.append(dataset.get(i))
+            i += 1
 
         return ({
             "index": index,
             "data": data,
             "page_size": page_size,
-            "next_index": (index + page_size)
+            "next_index": end_index
         })
