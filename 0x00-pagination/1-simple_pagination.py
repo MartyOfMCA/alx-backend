@@ -77,11 +77,11 @@ class Server:
         start_index, end_index = index_range(page, page_size)
         rows: List[int] = []
 
+        self.dataset()
+
         if (start_index > len(self.__dataset) or
                 (end_index > len(self.__dataset))):
             return ([])
-
-        self.dataset()
 
         return ([self.__dataset[index] for index
                 in range(start_index, end_index)])
