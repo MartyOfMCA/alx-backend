@@ -16,3 +16,21 @@ const connectToRedisServer = () => {
 
   return (client);
 };
+
+/**
+ * Add a new item to the redis server
+ * with the given given and value.
+ *
+ * @param {string} - The key for the item
+ * to be stored.
+ * @param {string} - The value for the
+ * item to be stored.
+ */
+const setNewSchool = (key, value) => {
+  connectToRedisServer()
+    .on('ready', function () {
+      this.set(key, value, print);
+  });
+};
+
+setNewSchool('HolbertonSanFrancisco', '100');
