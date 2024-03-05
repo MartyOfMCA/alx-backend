@@ -33,4 +33,25 @@ const setNewSchool = (key, value) => {
   });
 };
 
+/**
+ * Fetch the value of the given key
+ * from the redis server.
+ *
+ * @param {string} - The key to
+ * the item to fetch.
+ *
+ * @return the value of the associated
+ * key.
+ */
+const displaySchoolValue = (key) => {
+  connectToRedisServer()
+    .on('ready', function () {
+      this.get(key, (err, value) => {
+        console.log(value);
+      });
+    });
+};
+
+displaySchoolValue('Holberton');
 setNewSchool('HolbertonSanFrancisco', '100');
+displaySchoolValue('HolbertonSanFrancisco');
