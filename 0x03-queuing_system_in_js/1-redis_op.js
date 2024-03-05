@@ -1,5 +1,6 @@
 import { createClient, print } from 'redis';
 
+let client = undefined;
 /**
  * Establish a connection to the reds
  * server on localhost port 6379. Logs
@@ -9,7 +10,11 @@ import { createClient, print } from 'redis';
  * to the server.
  */
 const connectToRedisServer = () => {
-  const client = createClient();
+  // Ensure only one instance to the server
+  // is maintained.
+  if (client) return (client);
+
+  client = createClient();
 
   client.on('error', (err) => console.log(`Redis client not connected to the server: ${err}`));
   client.on('connect', () => console.log('Redis client connected to the server'));
