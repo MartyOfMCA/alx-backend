@@ -33,11 +33,10 @@ const connectToRedisServer = () => {
  * @param {string} - The value for the
  * item to be stored.
  */
-const setNewSchool = (key, value) => {
-  connectToRedisServer()
-    .on('ready', function () {
-      this.set(key, value, print);
-  });
+const setNewSchool = async (key, value) => {
+  const set = promisify(connectToRedisServer().set).bind(connectToRedisServer());
+
+  console.log(`Reply: ${await set(key, value)}`);
 };
 
 /**
