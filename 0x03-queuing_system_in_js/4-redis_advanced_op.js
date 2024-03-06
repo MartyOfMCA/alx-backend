@@ -45,4 +45,16 @@ const storeHashSet = () => {
     });
 };
 
+const getHashSet = () => {
+  const key = 'HolbertonSchools';
+
+  connectToRedisServer()
+    .on('ready', function () {
+      this.hgetall(key, (err, set) => {
+        console.log(set);
+      });
+    });
+};
+
 storeHashSet();
+getHashSet();
